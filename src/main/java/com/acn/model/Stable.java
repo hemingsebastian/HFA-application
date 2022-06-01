@@ -49,4 +49,9 @@ public class Stable
     {
         this.horses = horses;
     }
+
+    public UUID generateID()
+    {
+        return UUID.randomUUID();
+    }
 }

@@ -52,4 +52,9 @@ public class Horse
     {
         this.stable = stable;
     }
+
+    public UUID generateID()
+    {
+        return UUID.randomUUID();
+    }
 }
