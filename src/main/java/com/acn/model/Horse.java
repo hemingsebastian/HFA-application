@@ -1,46 +1,124 @@
 package com.acn.model;
 
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.util.UUID;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "horse")
 public class Horse
 {
     @Id
-    private UUID id;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "stable_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "stable_id", nullable = true)
     private Stable stable;
+    private Integer allowedDailyFeedings;
+    @ElementCollection
+    @CollectionTable(name = "previous_feedings")
+    private List<Long> previousFeedings;
+    private String name;
+    private String alias;
+    private String breed;
+    private String ownerName;
 
     protected Horse()
     {
 
     }
 
-    public Horse(Stable stable)
+    public Horse(Stable stable, Integer allowedDailyFeedings, List<Long> previousFeedings, String name, String alias, String breed, String ownerName)
     {
         this.stable = stable;
+        this.allowedDailyFeedings = allowedDailyFeedings;
+        this.previousFeedings = previousFeedings;
+        this.name = name;
+        this.alias = alias;
+        this.breed = breed;
+        this.ownerName = ownerName;
     }
 
-    public Horse(UUID id, Stable stable)
+    public Horse(Long id, Stable stable, Integer allowedDailyFeedings, List<Long> previousFeedings, String name, String alias, String breed, String ownerName)
     {
         this.id = id;
         this.stable = stable;
+        this.allowedDailyFeedings = allowedDailyFeedings;
+        this.previousFeedings = previousFeedings;
+        this.name = name;
+        this.alias = alias;
+        this.breed = breed;
+        this.ownerName = ownerName;
     }
 
-    public UUID getId()
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(UUID id)
+    public void setId(Long id)
     {
         this.id = id;
+    }
+
+    public Integer getAllowedDailyFeedings()
+    {
+        return allowedDailyFeedings;
+    }
+
+    public void setAllowedDailyFeedings(Integer allowedDailyFeedings)
+    {
+        this.allowedDailyFeedings = allowedDailyFeedings;
+    }
+
+    public List<Long> getPreviousFeedings()
+    {
+        return previousFeedings;
+    }
+
+    public void setPreviousFeedings(List<Long> previousFeedings)
+    {
+        this.previousFeedings = previousFeedings;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public String getAlias()
+    {
+        return alias;
+    }
+
+    public void setAlias(String alias)
+    {
+        this.alias = alias;
+    }
+
+    public String getBreed()
+    {
+        return breed;
+    }
+
+    public void setBreed(String breed)
+    {
+        this.breed = breed;
+    }
+
+    public String getOwnerName()
+    {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName)
+    {
+        this.ownerName = ownerName;
     }
 
     public Stable getStable()
@@ -53,8 +131,4 @@ public class Horse
         this.stable = stable;
     }
 
-    public UUID generateID()
-    {
-        return UUID.randomUUID();
-    }
 }

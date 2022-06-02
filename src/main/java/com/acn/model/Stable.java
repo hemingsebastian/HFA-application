@@ -1,19 +1,18 @@
 package com.acn.model;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name = "stable")
 public class Stable
 {
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @OneToMany(mappedBy = "stable", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Horse> horses;
-
 
     protected Stable()
     {
@@ -24,18 +23,18 @@ public class Stable
         this.horses = horses;
     }
 
-    public Stable(UUID id, List<Horse> horses)
+    public Stable(Long id, List<Horse> horses)
     {
         this.id = id;
         this.horses = horses;
     }
 
-    public UUID getId()
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(UUID id)
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -50,8 +49,5 @@ public class Stable
         this.horses = horses;
     }
 
-    public UUID generateID()
-    {
-        return UUID.randomUUID();
-    }
+
 }
