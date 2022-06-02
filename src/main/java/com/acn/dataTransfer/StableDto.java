@@ -5,20 +5,23 @@ import java.util.List;
 public class StableDto
 {
     private Long id;
+    private String timezone;
     private List<HorseDto> horses;
 
     public StableDto()
     {
     }
 
-    public StableDto(Long id, List<HorseDto> horses)
+    public StableDto(String timezone, List<HorseDto> horses)
     {
-        this.id = id;
+        this.timezone = timezone;
         this.horses = horses;
     }
 
-    public StableDto(List<HorseDto> horses)
+    public StableDto(Long id, String timezone, List<HorseDto> horses)
     {
+        this.id = id;
+        this.timezone = timezone;
         this.horses = horses;
     }
 
@@ -40,5 +43,15 @@ public class StableDto
     public void setHorses(List<HorseDto> horses)
     {
         this.horses = horses;
+    }
+
+    public String getTimezone()
+    {
+        return timezone;
+    }
+
+    public void setTimezone(String timezone)
+    {
+        this.timezone = timezone;
     }
 }

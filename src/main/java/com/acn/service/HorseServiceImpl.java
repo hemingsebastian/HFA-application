@@ -69,7 +69,7 @@ public class HorseServiceImpl implements HorseService
         Horse horse = horseDao.readHorseById(id);
         List<Long> feedingsToday= new ArrayList<>();
         Long now = Instant.now().getEpochSecond();
-        LocalDate today = convertUnixTimeStampToLocalDate(now);
+        LocalDate today = convertUnixTimeStampToLocalDate(now, horse);
         if(horse.getPreviousFeedings().size() > 0)
         {
             Long lastFeeding = horse.getPreviousFeedings().get(horse.getPreviousFeedings().size()-1);
@@ -80,7 +80,7 @@ public class HorseServiceImpl implements HorseService
         }
         for (Long previousFeeding : horse.getPreviousFeedings())
         {
-         if(convertUnixTimeStampToLocalDate(previousFeeding).equals(today))
+         if(convertUnixTimeStampToLocalDate(previousFeeding, horse).equals(today))
          {
              feedingsToday.add(previousFeeding);
          }
@@ -123,9 +123,9 @@ public class HorseServiceImpl implements HorseService
     }
 
 
-    private LocalDate convertUnixTimeStampToLocalDate(Long timestamp)
+    private LocalDate convertUnixTimeStampToLocalDate(Long timestamp, Horse horse)
     {
-        LocalDateTime localDateTime = Instant.ofEpochSecond(timestamp).atZone(ZoneId.of("Europe/Berlin")).toLocalDateTime();
+        LocalDateTime localDateTime = Instant.ofEpochSecond(timestamp).atZone(ZoneId.of(horse.getStable().getTimezone())).toLocalDateTime();
         LocalDate localDate = localDateTime.toLocalDate();
         return localDate;
 

@@ -67,11 +67,15 @@ public class StableRestController
     {
 
         List<Horse> horses = new ArrayList<>();
-        for (HorseDto horseDto : stableDto.getHorses())
+        if(stableDto.getHorses() != null)
         {
-            horses.add(new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName()));
+            for (HorseDto horseDto : stableDto.getHorses())
+            {
+                horses.add(new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName()));
+            }
         }
-        Stable stable = new Stable(horses);
+
+        Stable stable = new Stable(stableDto.getTimezone(),horses);
         stableService.createStable(stable);
         if(stable != null)
         {
@@ -85,11 +89,14 @@ public class StableRestController
     public ResponseEntity updateStable(@PathVariable("id") Long id, @RequestBody StableDto stableDto)
     {
         List<Horse> horses = new ArrayList<>();
-        for (HorseDto horseDto : stableDto.getHorses())
+        if(stableDto.getHorses() != null)
         {
-            horses.add(new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName()));
+            for (HorseDto horseDto : stableDto.getHorses())
+            {
+                horses.add(new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName()));
+            }
         }
-        Stable stable = new Stable(horses);
+        Stable stable = new Stable(stableDto.getTimezone(),horses);
         stable.setId(id);
 
         if(stable != null)

@@ -124,12 +124,12 @@ public class HorseRestController
 
     //url: localhost:8080/horses/{id}/feed
     @PutMapping("/horses/{id}/feed")
-    public ResponseEntity feedHorse(@PathVariable("id") Long id)
+    public ResponseEntity<Boolean> feedHorse(@PathVariable("id") Long id)
     {
         try
         {
             horseService.feedHorse(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(true);
         }
         catch (HorseAteTooRecentlyException e)
         {
