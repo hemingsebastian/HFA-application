@@ -1,6 +1,10 @@
 package com.acn.model;
 
+import com.acn.dataTransfer.HorseDto;
+import com.acn.dataTransfer.StableDto;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,5 +53,14 @@ public class Stable
         this.horses = horses;
     }
 
+    public StableDto convertToDto()
+    {
+        List<HorseDto> horsesDto = new ArrayList<>();
+        for (Horse horse : this.horses)
+        {
+            horsesDto.add(horse.convertToDto());
+        }
+        return new StableDto(this.id, horsesDto);
+    }
 
 }

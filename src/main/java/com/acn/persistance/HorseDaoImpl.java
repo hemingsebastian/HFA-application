@@ -53,5 +53,23 @@ public class HorseDaoImpl implements HorseDao
         horseRepository.updateFeedingPreferences(id,allowedDailyFeedings);
     }
 
+    @Override
+    public void updateHorseName(Long id, String name)
+    {
+        horseRepository.updateName(id, name);
+    }
+
+    @Override
+    public void updateHorseAlias(Long id, String alias)
+    {
+        horseRepository.updateAlias(id, alias);
+    }
+
+    @Override
+    public void updateHorseOwnerName(Long id, String ownerName)
+    {
+    horseRepository.updateOwnerName(id, ownerName);
+    }
+
 
 }

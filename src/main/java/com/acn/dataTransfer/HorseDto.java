@@ -1,38 +1,26 @@
-package com.acn.model;
+package com.acn.dataTransfer;
 
-
-import com.acn.dataTransfer.HorseDto;
-
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "horse")
-public class Horse
+public class HorseDto
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "stable_id", nullable = false)
-    private Stable stable;
+    private Long stableId;
     private Integer allowedDailyFeedings;
-    @ElementCollection
-    @CollectionTable(name = "previous_feedings")
     private List<Long> previousFeedings;
     private String name;
     private String alias;
     private String breed;
     private String ownerName;
 
-    protected Horse()
+    public HorseDto()
     {
-
     }
 
-    public Horse(Stable stable, Integer allowedDailyFeedings, List<Long> previousFeedings, String name, String alias, String breed, String ownerName)
+    public HorseDto(Long id, Long stableId, Integer allowedDailyFeedings, List<Long> previousFeedings, String name, String alias, String breed, String ownerName)
     {
-        this.stable = stable;
+        this.id = id;
+        this.stableId = stableId;
         this.allowedDailyFeedings = allowedDailyFeedings;
         this.previousFeedings = previousFeedings;
         this.name = name;
@@ -41,10 +29,9 @@ public class Horse
         this.ownerName = ownerName;
     }
 
-    public Horse(Long id, Stable stable, Integer allowedDailyFeedings, List<Long> previousFeedings, String name, String alias, String breed, String ownerName)
+    public HorseDto(Long stableId, Integer allowedDailyFeedings, List<Long> previousFeedings, String name, String alias, String breed, String ownerName)
     {
-        this.id = id;
-        this.stable = stable;
+        this.stableId = stableId;
         this.allowedDailyFeedings = allowedDailyFeedings;
         this.previousFeedings = previousFeedings;
         this.name = name;
@@ -61,6 +48,16 @@ public class Horse
     public void setId(Long id)
     {
         this.id = id;
+    }
+
+    public Long getStableId()
+    {
+        return stableId;
+    }
+
+    public void setStableId(Long stableId)
+    {
+        this.stableId = stableId;
     }
 
     public Integer getAllowedDailyFeedings()
@@ -123,19 +120,5 @@ public class Horse
         this.ownerName = ownerName;
     }
 
-    public Stable getStable()
-    {
-        return stable;
-    }
-
-    public void setStable(Stable stable)
-    {
-        this.stable = stable;
-    }
-
-    public HorseDto convertToDto()
-    {
-        return new HorseDto(this.id, this.stable.getId(), this.allowedDailyFeedings, this.previousFeedings, this.name, this.alias,this.breed, this.ownerName);
-    }
 
 }

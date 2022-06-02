@@ -3,7 +3,9 @@ package com.acn.service;
 import com.acn.exceptions.HorseAteTooManyTimesTodayException;
 import com.acn.exceptions.HorseAteTooRecentlyException;
 import com.acn.model.Horse;
+import com.acn.model.Stable;
 import com.acn.persistance.HorseDao;
+import com.acn.persistance.StableDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,6 +94,32 @@ public class HorseServiceImpl implements HorseService
         horse.getPreviousFeedings().add(now);
         horseDao.updateHorse(horse);
 
+    }
+
+    @Override@Transactional
+    public void updateHorseName(Long id, String name)
+    {
+      horseDao.updateHorseName(id, name);
+    }
+
+    @Override@Transactional
+    public void updateHorseAlias(Long id, String alias)
+    {
+    horseDao.updateHorseAlias(id, alias);
+    }
+
+    @Override@Transactional
+    public void updateHorseOwnerName(Long id, String ownerName)
+    {
+    horseDao.updateHorseOwnerName(id, ownerName);
+    }
+
+    @Override@Transactional
+    public void updateHorseStable(Long id, Stable stable)
+    {
+        Horse horse = horseDao.readHorseById(id);
+        horse.setStable(stable);
+        horseDao.updateHorse(horse);
     }
 
 

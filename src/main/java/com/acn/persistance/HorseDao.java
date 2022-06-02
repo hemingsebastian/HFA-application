@@ -13,4 +13,7 @@ public interface HorseDao
     void updateHorse(Horse horse);
     void removeHorseById(Long id);
     void updateHorseFeedingPreferences(Long id, Integer allowedDailyFeedings);
+    void updateHorseName(Long id, String name);
+    void updateHorseAlias(Long id, String alias);
+    void updateHorseOwnerName(Long id, String ownerName);
 }
