@@ -1,0 +1,34 @@
+create schema HFA;
+create user 'HFA'@'%' identified by 'friday&42%';
+grant all privileges on HFA.* to 'HFA'@'%';
+
+-- table creation should not be necessary with Spring Data JPA
+
+
+CREATE TABLE `stable` (
+   `id` bigint NOT NULL AUTO_INCREMENT,
+   `timezone` varchar(255) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+ )
+
+ CREATE TABLE `horse` (
+    `id` bigint NOT NULL AUTO_INCREMENT,
+    `alias` varchar(255) DEFAULT NULL,
+    `allowed_daily_feedings` int DEFAULT NULL,
+    `breed` varchar(255) DEFAULT NULL,
+    `name` varchar(255) DEFAULT NULL,
+    `owner_name` varchar(255) DEFAULT NULL,
+    `stable_id` bigint NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `FK13qf0qj4o3ec0gkqwj60rxc26` (`stable_id`),
+    CONSTRAINT `FK13qf0qj4o3ec0gkqwj60rxc26` FOREIGN KEY (`stable_id`) REFERENCES `stable` (`id`)
+  )
+
+
+
+  CREATE TABLE `previous_feedings` (
+     `horse_id` bigint NOT NULL,
+     `previous_feedings` bigint DEFAULT NULL,
+     KEY `FK747jvm2gp05l7pvl6t3201qob` (`horse_id`),
+     CONSTRAINT `FK747jvm2gp05l7pvl6t3201qob` FOREIGN KEY (`horse_id`) REFERENCES `horse` (`id`)
+   )

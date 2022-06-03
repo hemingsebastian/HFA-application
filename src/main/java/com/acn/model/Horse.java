@@ -15,13 +15,19 @@ public class Horse
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "stable_id", nullable = false)
     private Stable stable;
+    @Column(nullable=false)
     private Integer allowedDailyFeedings;
     @ElementCollection
+    @Column(nullable=false)
     @CollectionTable(name = "previous_feedings")
     private List<Long> previousFeedings;
+    @Column(nullable=false)
     private String name;
+    @Column(nullable=false)
     private String alias;
+    @Column(nullable=false)
     private String breed;
+    @Column(nullable=false)
     private String ownerName;
 
     protected Horse()
