@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class StableServiceImpl implements StableService
@@ -36,22 +35,24 @@ public class StableServiceImpl implements StableService
     @Override
     public void removeStableById(Long id) throws StableStillHasHorsesException
     {
-        if(stableDao.readStableById(id).getHorses().size() > 0)
+        if (stableDao.readStableById(id).getHorses().size() > 0)
         {
             throw new StableStillHasHorsesException("Cannot delete a stable with horses. Remaining Horses need to be assigned a new home first.");
         }
         stableDao.removeStableById(id);
     }
 
-    @Override@Transactional
+    @Override
+    @Transactional
     public void createStable(Stable stable)
     {
         stableDao.createStable(stable);
     }
 
-    @Override@Transactional
+    @Override
+    @Transactional
     public void updateStable(Stable stable)
     {
-    stableDao.updateStable(stable);
+        stableDao.updateStable(stable);
     }
 }

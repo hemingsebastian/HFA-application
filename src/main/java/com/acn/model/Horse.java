@@ -1,6 +1,5 @@
 package com.acn.model;
 
-
 import com.acn.dataTransfer.HorseDto;
 
 import javax.persistence.*;
@@ -27,7 +26,6 @@ public class Horse
 
     protected Horse()
     {
-
     }
 
     public Horse(Stable stable, Integer allowedDailyFeedings, List<Long> previousFeedings, String name, String alias, String breed, String ownerName)
@@ -135,7 +133,7 @@ public class Horse
 
     public HorseDto convertToDto()
     {
-        return new HorseDto(this.id, this.stable.getId(), this.allowedDailyFeedings, this.previousFeedings, this.name, this.alias,this.breed, this.ownerName);
+        return new HorseDto(this.id, this.stable.getId(), this.allowedDailyFeedings, this.previousFeedings, this.name, this.alias, this.breed, this.ownerName);
     }
 
 }

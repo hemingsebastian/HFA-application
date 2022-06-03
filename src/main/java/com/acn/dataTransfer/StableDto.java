@@ -8,6 +8,9 @@ public class StableDto
     private String timezone;
     private List<HorseDto> horses;
 
+    public StableDto()
+    {
+    }
 
     public StableDto(String timezone, List<HorseDto> horses)
     {

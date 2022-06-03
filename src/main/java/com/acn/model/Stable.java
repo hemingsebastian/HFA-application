@@ -20,7 +20,6 @@ public class Stable
 
     protected Stable()
     {
-
     }
 
     public Stable(Long id, String timezone, List<Horse> horses)
@@ -56,16 +55,6 @@ public class Stable
         this.horses = horses;
     }
 
-    public StableDto convertToDto()
-    {
-        List<HorseDto> horsesDto = new ArrayList<>();
-        for (Horse horse : this.horses)
-        {
-            horsesDto.add(horse.convertToDto());
-        }
-        return new StableDto(this.id,this.timezone,horsesDto);
-    }
-
     public String getTimezone()
     {
         return timezone;
@@ -74,5 +63,15 @@ public class Stable
     public void setTimezone(String timezone)
     {
         this.timezone = timezone;
+    }
+
+    public StableDto convertToDto()
+    {
+        List<HorseDto> horsesDto = new ArrayList<>();
+        for (Horse horse : this.horses)
+        {
+            horsesDto.add(horse.convertToDto());
+        }
+        return new StableDto(this.id, this.timezone, horsesDto);
     }
 }

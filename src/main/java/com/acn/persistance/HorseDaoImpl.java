@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
 @Component
 public class HorseDaoImpl implements HorseDao
 {
@@ -33,43 +34,47 @@ public class HorseDaoImpl implements HorseDao
     @Override
     public void createHorse(Horse horse)
     {
-     horseRepository.save(horse);
+        horseRepository.save(horse);
     }
 
     @Override
     public void updateHorse(Horse horse)
     {
-    horseRepository.save(horse);
+        horseRepository.save(horse);
     }
 
     @Override
     public void removeHorseById(Long id)
     {
-    horseRepository.deleteById(id);
+        horseRepository.deleteById(id);
     }
 
-    @Override@Transactional
+    @Override
+    @Transactional
     public void updateHorseFeedingPreferences(Long id, Integer allowedDailyFeedings)
     {
-        horseRepository.updateFeedingPreferences(id,allowedDailyFeedings);
+        horseRepository.updateFeedingPreferences(id, allowedDailyFeedings);
     }
 
-    @Override@Transactional
+    @Override
+    @Transactional
     public void updateHorseName(Long id, String name)
     {
         horseRepository.updateName(id, name);
     }
 
-    @Override@Transactional
+    @Override
+    @Transactional
     public void updateHorseAlias(Long id, String alias)
     {
         horseRepository.updateAlias(id, alias);
     }
 
-    @Override@Transactional
+    @Override
+    @Transactional
     public void updateHorseOwnerName(Long id, String ownerName)
     {
-    horseRepository.updateOwnerName(id, ownerName);
+        horseRepository.updateOwnerName(id, ownerName);
     }
 
 

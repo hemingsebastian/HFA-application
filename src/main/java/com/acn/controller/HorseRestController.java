@@ -23,14 +23,12 @@ public class HorseRestController
     private HorseService horseService;
     private StableService stableService;
 
+    @Autowired
     public HorseRestController(HorseService horseService, StableService stableService)
     {
         this.horseService = horseService;
         this.stableService = stableService;
     }
-
-    @Autowired
-
 
     // url: localhost:8080/horses
     @GetMapping("/horses")
@@ -43,7 +41,7 @@ public class HorseRestController
             result.add(horse.convertToDto());
         }
 
-        if(result.size() > 0)
+        if (result.size() > 0)
         {
             return ResponseEntity.ok(result);
         }
@@ -58,7 +56,7 @@ public class HorseRestController
     {
         HorseDto result = horseService.readHorseById(id).convertToDto();
 
-        if(result != null)
+        if (result != null)
         {
             return ResponseEntity.ok(result);
         }
@@ -76,7 +74,7 @@ public class HorseRestController
         Horse horse = new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName());
 
         horseService.createHorse(horse);
-        if(horse != null)
+        if (horse != null)
         {
             return ResponseEntity.created(URI.create("/horses/" + horse.getId())).build();
         }
@@ -91,7 +89,7 @@ public class HorseRestController
         Horse horse = new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName());
         horse.setId(id);
 
-        if(horse != null)
+        if (horse != null)
         {
             horseService.updateHorse(horse);
             return ResponseEntity.ok().build();
@@ -104,9 +102,9 @@ public class HorseRestController
     public ResponseEntity updateHorseWithFeedingPreference(@PathVariable("id") Long id, @RequestParam("feedPreference") Integer allowedDailyFeedings)
     {
         Horse horse = horseService.readHorseById(id);
-        if(horse != null)
+        if (horse != null)
         {
-            horseService.updateHorseFeedingPreferences(id,allowedDailyFeedings);
+            horseService.updateHorseFeedingPreferences(id, allowedDailyFeedings);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();
@@ -116,7 +114,8 @@ public class HorseRestController
     @DeleteMapping("/horses/{id}")
     public ResponseEntity removeHorse(@PathVariable("id") Long id)
     {
-        if (horseService.readHorseById(id) == null) {
+        if (horseService.readHorseById(id) == null)
+        {
             return ResponseEntity.notFound().build();
         }
         horseService.removeHorseById(id);
@@ -127,18 +126,18 @@ public class HorseRestController
     @PutMapping("/horses/{id}/feed")
     public ResponseEntity<FeedingDto> feedHorse(@PathVariable("id") Long id)
     {
-        if(horseService.readHorseById(id) == null)
+        if (horseService.readHorseById(id) == null)
         {
             return ResponseEntity.badRequest().build();
         }
         try
         {
             horseService.feedHorse(id);
-            return ResponseEntity.ok(new FeedingDto(true,"Horse was just fed."));
+            return ResponseEntity.ok(new FeedingDto(true, "Horse was fed."));
         }
         catch (HorseAteTooRecentlyException | HorseAteTooManyTimesTodayException e)
         {
-            return ResponseEntity.ok(new FeedingDto(false,e.getMessage()));
+            return ResponseEntity.ok(new FeedingDto(false, e.getMessage()));
         }
     }
 
@@ -147,7 +146,7 @@ public class HorseRestController
     public ResponseEntity updateHorseWithName(@PathVariable("id") Long id, @RequestParam("name") String name)
     {
         Horse horse = horseService.readHorseById(id);
-        if(horse != null)
+        if (horse != null)
         {
             horseService.updateHorseName(id, name);
             return ResponseEntity.ok().build();
@@ -160,7 +159,7 @@ public class HorseRestController
     public ResponseEntity updateHorseWithAlias(@PathVariable("id") Long id, @RequestParam("alias") String alias)
     {
         Horse horse = horseService.readHorseById(id);
-        if(horse != null)
+        if (horse != null)
         {
             horseService.updateHorseAlias(id, alias);
             return ResponseEntity.ok().build();
@@ -174,7 +173,7 @@ public class HorseRestController
     public ResponseEntity updateHorseWithOwnerName(@PathVariable("id") Long id, @RequestParam("owner") String owner)
     {
         Horse horse = horseService.readHorseById(id);
-        if(horse != null)
+        if (horse != null)
         {
             horseService.updateHorseOwnerName(id, owner);
             return ResponseEntity.ok().build();
@@ -184,11 +183,11 @@ public class HorseRestController
 
     //url: localhost:8080/horses/{id}/stable?stableId=num
     @PutMapping("/horses/{id}/stable")
-    public ResponseEntity updateHorseWithStableId(@PathVariable("id") Long id, @RequestParam("stableId")Long stableId)
+    public ResponseEntity updateHorseWithStableId(@PathVariable("id") Long id, @RequestParam("stableId") Long stableId)
     {
         Horse horse = horseService.readHorseById(id);
         Stable stable = stableService.readStableById(stableId);
-        if(horse != null && stable != null)
+        if (horse != null && stable != null)
         {
             horseService.updateHorseStable(id, stable);
             return ResponseEntity.ok().build();
