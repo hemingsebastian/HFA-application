@@ -51,7 +51,7 @@ public class StableRestController
     public ResponseEntity<StableDto> readStableById(@PathVariable("id") Long id)
     {
         StableDto result = null;
-        if(stableService.readStableById(id) != null)
+        if (stableService.readStableById(id) != null)
         {
             result = stableService.readStableById(id).convertToDto();
         }
@@ -70,7 +70,7 @@ public class StableRestController
     {
         Stable stable = null;
         List<Horse> horses = new ArrayList<>();
-        if (stableDto.getHorses() != null )
+        if (stableDto.getHorses() != null)
         {
             for (HorseDto horseDto : stableDto.getHorses())
             {

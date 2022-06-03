@@ -55,9 +55,9 @@ public class HorseRestController
     public ResponseEntity<HorseDto> readHorseById(@PathVariable("id") Long id)
     {
         HorseDto result = null;
-        if(horseService.readHorseById(id) != null)
+        if (horseService.readHorseById(id) != null)
         {
-           result = horseService.readHorseById(id).convertToDto();
+            result = horseService.readHorseById(id).convertToDto();
         }
         if (result != null)
         {
@@ -73,10 +73,12 @@ public class HorseRestController
     @PostMapping("/horses/new")
     public ResponseEntity createHorse(@RequestBody HorseDto horseDto)
     {
-
-        Horse horse = new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName());
-
-        horseService.createHorse(horse);
+        Horse horse = null;
+        if (stableService.readStableById((horseDto.getStableId())) != null)
+        {
+            horse = new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName());
+            horseService.createHorse(horse);
+        }
         if (horse != null && stableService.readStableById(horse.getStable().getId()) != null)
         {
             return ResponseEntity.created(URI.create("/horses/" + horse.getId())).build();
@@ -88,10 +90,12 @@ public class HorseRestController
     @PutMapping("/horses/{id}")
     public ResponseEntity updateHorse(@PathVariable("id") Long id, @RequestBody HorseDto horseDto)
     {
-
-        Horse horse = new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName());
-        horse.setId(id);
-
+        Horse horse = null;
+        if (stableService.readStableById((horseDto.getStableId())) != null)
+        {
+            horse = new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName());
+            horse.setId(id);
+        }
         if (horse != null && horseService.readHorseById(horse.getId()) != null && stableService.readStableById(horse.getStable().getId()) != null)
         {
             horseService.updateHorse(horse);
