@@ -5,6 +5,7 @@ import com.acn.repository.HorseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 @Component
 public class HorseDaoImpl implements HorseDao
@@ -47,25 +48,25 @@ public class HorseDaoImpl implements HorseDao
     horseRepository.deleteById(id);
     }
 
-    @Override
+    @Override@Transactional
     public void updateHorseFeedingPreferences(Long id, Integer allowedDailyFeedings)
     {
         horseRepository.updateFeedingPreferences(id,allowedDailyFeedings);
     }
 
-    @Override
+    @Override@Transactional
     public void updateHorseName(Long id, String name)
     {
         horseRepository.updateName(id, name);
     }
 
-    @Override
+    @Override@Transactional
     public void updateHorseAlias(Long id, String alias)
     {
         horseRepository.updateAlias(id, alias);
     }
 
-    @Override
+    @Override@Transactional
     public void updateHorseOwnerName(Long id, String ownerName)
     {
     horseRepository.updateOwnerName(id, ownerName);

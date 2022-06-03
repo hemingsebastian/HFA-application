@@ -1,5 +1,6 @@
 package com.acn.controller;
 
+import com.acn.dataTransfer.FeedingDto;
 import com.acn.dataTransfer.HorseDto;
 import com.acn.exceptions.HorseAteTooManyTimesTodayException;
 import com.acn.exceptions.HorseAteTooRecentlyException;
@@ -124,20 +125,20 @@ public class HorseRestController
 
     //url: localhost:8080/horses/{id}/feed
     @PutMapping("/horses/{id}/feed")
-    public ResponseEntity<Boolean> feedHorse(@PathVariable("id") Long id)
+    public ResponseEntity<FeedingDto> feedHorse(@PathVariable("id") Long id)
     {
+        if(horseService.readHorseById(id) == null)
+        {
+            return ResponseEntity.badRequest().build();
+        }
         try
         {
             horseService.feedHorse(id);
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(new FeedingDto(true,"Horse was just fed."));
         }
-        catch (HorseAteTooRecentlyException e)
+        catch (HorseAteTooRecentlyException | HorseAteTooManyTimesTodayException e)
         {
-            return ResponseEntity.badRequest().build();
-        }
-        catch (HorseAteTooManyTimesTodayException e)
-        {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.ok(new FeedingDto(false,e.getMessage()));
         }
     }
 

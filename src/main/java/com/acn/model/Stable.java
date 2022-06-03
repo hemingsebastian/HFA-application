@@ -15,7 +15,7 @@ public class Stable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String timezone;
-    @OneToMany(mappedBy = "stable", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "stable", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     List<Horse> horses;
 
     protected Stable()

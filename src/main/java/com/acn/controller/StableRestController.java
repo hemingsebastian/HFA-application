@@ -2,6 +2,7 @@ package com.acn.controller;
 
 import com.acn.dataTransfer.HorseDto;
 import com.acn.dataTransfer.StableDto;
+import com.acn.exceptions.StableStillHasHorsesException;
 import com.acn.model.Horse;
 import com.acn.model.Stable;
 import com.acn.service.StableService;
@@ -115,7 +116,14 @@ public class StableRestController
         if (stableService.readStableById(id) == null) {
             return ResponseEntity.notFound().build();
         }
-        stableService.removeStableById(id);
+        try
+        {
+            stableService.removeStableById(id);
+        }
+        catch (StableStillHasHorsesException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         return ResponseEntity.noContent().build();
     }
 

@@ -13,10 +13,6 @@ public class HorseDto
     private String breed;
     private String ownerName;
 
-    public HorseDto()
-    {
-    }
-
     public HorseDto(Long id, Long stableId, Integer allowedDailyFeedings, List<Long> previousFeedings, String name, String alias, String breed, String ownerName)
     {
         this.id = id;

@@ -1,5 +1,6 @@
 package com.acn.service;
 
+import com.acn.exceptions.StableStillHasHorsesException;
 import com.acn.model.Stable;
 import com.acn.persistance.StableDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,12 @@ public class StableServiceImpl implements StableService
     }
 
     @Override
-    public void removeStableById(Long id)
+    public void removeStableById(Long id) throws StableStillHasHorsesException
     {
+        if(stableDao.readStableById(id).getHorses().size() > 0)
+        {
+            throw new StableStillHasHorsesException("Cannot delete a stable with horses. Remaining Horses need to be assigned a new home first.");
+        }
         stableDao.removeStableById(id);
     }
 
