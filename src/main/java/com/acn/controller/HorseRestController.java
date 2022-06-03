@@ -89,7 +89,7 @@ public class HorseRestController
         Horse horse = new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName());
         horse.setId(id);
 
-        if (horse != null)
+        if (horse != null && horseService.readHorseById(horse.getId()) != null)
         {
             horseService.updateHorse(horse);
             return ResponseEntity.ok().build();

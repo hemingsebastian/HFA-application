@@ -99,7 +99,7 @@ public class StableRestController
         Stable stable = new Stable(stableDto.getTimezone(), horses);
         stable.setId(id);
 
-        if (stable != null)
+        if (stable != null && stableService.readStableById(stable.getId()) != null)
         {
             stableService.updateStable(stable);
             return ResponseEntity.ok().build();
