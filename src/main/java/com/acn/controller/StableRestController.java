@@ -50,8 +50,11 @@ public class StableRestController
     @GetMapping("/stables/{id}")
     public ResponseEntity<StableDto> readStableById(@PathVariable("id") Long id)
     {
-        StableDto result = stableService.readStableById(id).convertToDto();
-
+        StableDto result = null;
+        if(stableService.readStableById(id) != null)
+        {
+            result = stableService.readStableById(id).convertToDto();
+        }
         if (result != null)
         {
             return ResponseEntity.ok(result);
@@ -65,18 +68,18 @@ public class StableRestController
     @PostMapping("/stables/new")
     public ResponseEntity createStable(@RequestBody StableDto stableDto)
     {
-
+        Stable stable = null;
         List<Horse> horses = new ArrayList<>();
-        if (stableDto.getHorses() != null)
+        if (stableDto.getHorses() != null )
         {
             for (HorseDto horseDto : stableDto.getHorses())
             {
                 horses.add(new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName()));
             }
         }
-
-        Stable stable = new Stable(stableDto.getTimezone(), horses);
+        stable = new Stable(stableDto.getTimezone(), horses);
         stableService.createStable(stable);
+
         if (stable != null)
         {
             return ResponseEntity.created(URI.create("/stables/" + stable.getId())).build();
@@ -88,6 +91,7 @@ public class StableRestController
     @PutMapping("/stables/{id}")
     public ResponseEntity updateStable(@PathVariable("id") Long id, @RequestBody StableDto stableDto)
     {
+        Stable stable = null;
         List<Horse> horses = new ArrayList<>();
         if (stableDto.getHorses() != null)
         {
@@ -96,7 +100,7 @@ public class StableRestController
                 horses.add(new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName()));
             }
         }
-        Stable stable = new Stable(stableDto.getTimezone(), horses);
+        stable = new Stable(stableDto.getTimezone(), horses);
         stable.setId(id);
 
         if (stable != null && stableService.readStableById(stable.getId()) != null)

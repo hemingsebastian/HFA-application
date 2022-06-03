@@ -54,8 +54,11 @@ public class HorseRestController
     @GetMapping("/horses/{id}")
     public ResponseEntity<HorseDto> readHorseById(@PathVariable("id") Long id)
     {
-        HorseDto result = horseService.readHorseById(id).convertToDto();
-
+        HorseDto result = null;
+        if(horseService.readHorseById(id) != null)
+        {
+           result = horseService.readHorseById(id).convertToDto();
+        }
         if (result != null)
         {
             return ResponseEntity.ok(result);
@@ -74,7 +77,7 @@ public class HorseRestController
         Horse horse = new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName());
 
         horseService.createHorse(horse);
-        if (horse != null)
+        if (horse != null && stableService.readStableById(horse.getStable().getId()) != null)
         {
             return ResponseEntity.created(URI.create("/horses/" + horse.getId())).build();
         }
@@ -89,7 +92,7 @@ public class HorseRestController
         Horse horse = new Horse(stableService.readStableById(horseDto.getStableId()), horseDto.getAllowedDailyFeedings(), horseDto.getPreviousFeedings(), horseDto.getName(), horseDto.getAlias(), horseDto.getBreed(), horseDto.getOwnerName());
         horse.setId(id);
 
-        if (horse != null && horseService.readHorseById(horse.getId()) != null)
+        if (horse != null && horseService.readHorseById(horse.getId()) != null && stableService.readStableById(horse.getStable().getId()) != null)
         {
             horseService.updateHorse(horse);
             return ResponseEntity.ok().build();
